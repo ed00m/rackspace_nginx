@@ -1,10 +1,12 @@
 #
-# Cookbook Name:: nginx
+# Cookbook Name:: rackspace_nginx
 # Recipe:: http_echo_module
 #
 # Author:: Danial Pearce (<danial@cushycms.com>)
+# Author:: Jason Nelson (<jason.nelson@rackspace.com>)
 #
 # Copyright 2012-2013, CushyCMS
+# Copyright 2014. Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,13 +21,13 @@
 # limitations under the License.
 #
 
-echo_src_filename = "echo-nginx-module-v#{node['nginx']['echo']['version']}.tar.gz"
+echo_src_filename = "echo-nginx-module-v#{node['rackspace_nginx']['echo']['version']}.tar.gz"
 echo_src_filepath = "#{Chef::Config['file_cache_path']}/#{echo_src_filename}"
-echo_extract_path = "#{Chef::Config['file_cache_path']}/nginx_echo_module/#{node['nginx']['echo']['checksum']}"
+echo_extract_path = "#{Chef::Config['file_cache_path']}/nginx_echo_module/#{node['rackspace_nginx']['echo']['checksum']}"
 
 remote_file echo_src_filepath do
-  source   node['nginx']['echo']['url']
-  checksum node['nginx']['echo']['checksum']
+  source   node['rackspace_nginx']['echo']['url']
+  checksum node['rackspace_nginx']['echo']['checksum']
   owner    'root'
   group    'root'
   mode     '0644'

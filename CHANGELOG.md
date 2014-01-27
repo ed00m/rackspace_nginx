@@ -2,6 +2,11 @@ nginx Cookbook CHANGELOG
 ========================
 This file is used to list changes made in each version of the nginx cookbook.
 
+v3.0.0
+------
+- Rewrite for Rackspace specific environments
+- Removed references to OS's not used within Rackspace
+- Changed name from nginx to rackspace_nginx
 
 v2.0.8
 ------

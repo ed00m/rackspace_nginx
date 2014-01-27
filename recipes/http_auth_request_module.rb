@@ -1,10 +1,12 @@
 #
-# Cookbook Name:: nginx
+# Cookbook Name:: rackspace_nginx
 # Recipe:: http_auth_request_module
 #
 # Author:: David Radcliffe (<radcliffe.david@gmail.com>)
+# Author:: Jason Nelson (<jason.nelson@rackspace.com>)
 #
 # Copyright 2013, David Radcliffe
+# Copyright 2014. Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,17 +23,17 @@
 
 # Documentation:
 #   http://nginx.org/en/docs/http/ngx_http_auth_request_module.html
-if node['nginx']['source']['version'] >= '1.5.4'
+if node['rackspace_nginx']['source']['version'] >= '1.5.4'
   node.run_state['nginx_configure_flags'] =
     node.run_state['nginx_configure_flags'] | ['--with-http_auth_request_module']
 else
-  arm_src_filename = ::File.basename(node['nginx']['auth_request']['url'])
+  arm_src_filename = ::File.basename(node['rackspace_nginx']['auth_request']['url'])
   arm_src_filepath = "#{Chef::Config['file_cache_path']}/#{arm_src_filename}"
-  arm_extract_path = "#{Chef::Config['file_cache_path']}/nginx_auth_request/#{node['nginx']['auth_request']['checksum']}"
+  arm_extract_path = "#{Chef::Config['file_cache_path']}/nginx_auth_request/#{node['rackspace_nginx']['auth_request']['checksum']}"
 
   remote_file arm_src_filepath do
-    source   node['nginx']['auth_request']['url']
-    checksum node['nginx']['auth_request']['checksum']
+    source   node['rackspace_nginx']['auth_request']['url']
+    checksum node['rackspace_nginx']['auth_request']['checksum']
     owner    'root'
     group    'root'
     mode     '0644'

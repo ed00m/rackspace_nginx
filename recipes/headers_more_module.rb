@@ -1,10 +1,12 @@
 #
-# Cookbook Name:: nginx
+# Cookbook Name:: rackspace_nginx
 # Recipe:: headers_more_module
 #
 # Author:: Lucas Jandrew (<ljandrew@riotgames.com>)
+# Author:: Jason Nelson (<jason.nelson@rackspace.com>)
 #
 # Copyright 2012-2013, Riot Games
+# Copyright 2014. Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,11 +21,11 @@
 # limitations under the License.
 
 tar_location = "#{Chef::Config['file_cache_path']}/headers_more.tar.gz"
-module_location = "#{Chef::Config['file_cache_path']}/headers_more/#{node['nginx']['headers_more']['source_checksum']}"
+module_location = "#{Chef::Config['file_cache_path']}/headers_more/#{node['rackspace_nginx']['headers_more']['source_checksum']}"
 
 remote_file tar_location do
-  source   node['nginx']['headers_more']['source_url']
-  checksum node['nginx']['headers_more']['source_checksum']
+  source   node['rackspace_nginx']['headers_more']['source_url']
+  checksum node['rackspace_nginx']['headers_more']['source_checksum']
   owner    'root'
   group    'root'
   mode     '0644'

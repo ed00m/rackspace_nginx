@@ -1,10 +1,12 @@
 #
-# Cookbook Name:: nginx
+# Cookbook Name:: rackspace_nginx
 # Recipe:: common/conf
 #
 # Author:: AJ Christensen <aj@junglist.gen.nz>
+# Author:: Jason Nelson (<jason.nelson@rackspace.com>)
 #
 # Copyright 2008-2013, Opscode, Inc.
+# Copyright 2014. Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,7 +22,7 @@
 #
 
 template 'nginx.conf' do
-  path   "#{node['nginx']['dir']}/nginx.conf"
+  path   "#{node['rackspace_nginx']['dir']}/nginx.conf"
   source 'nginx.conf.erb'
   owner  'root'
   group  'root'
@@ -28,7 +30,7 @@ template 'nginx.conf' do
   notifies :reload, 'service[nginx]'
 end
 
-template "#{node['nginx']['dir']}/sites-available/default" do
+template "#{node['rackspace_nginx']['dir']}/sites-available/default" do
   source 'default-site.erb'
   owner  'root'
   group  'root'
@@ -37,5 +39,5 @@ template "#{node['nginx']['dir']}/sites-available/default" do
 end
 
 nginx_site 'default' do
-  enable node['nginx']['default_site_enabled']
+  enable node['rackspace_nginx']['default_site_enabled']
 end

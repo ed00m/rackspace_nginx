@@ -1,10 +1,12 @@
 #
-# Cookbook Name:: nginx
+# Cookbook Name:: rackspace_nginx
 # Recipe:: commons
 #
 # Author:: AJ Christensen <aj@junglist.gen.nz>
+# Author:: Jason Nelson (<jason.nelson@rackspace.com>)
 #
 # Copyright 2008-2013, Opscode, Inc.
+# Copyright 2014. Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,6 +21,6 @@
 # limitations under the License.
 #
 
-include_recipe 'nginx::commons_dir'
-include_recipe 'nginx::commons_script'
-include_recipe 'nginx::commons_conf'
+include_recipe 'rackspace_nginx::commons_dir'
+include_recipe 'rackspace_nginx::commons_script'
+include_recipe 'rackspace_nginx::commons_conf'

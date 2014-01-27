@@ -1,10 +1,12 @@
 #
-# Cookbook Name:: nginx
+# Cookbook Name:: rackspace_nginx
 # Recipe:: http_geoip_module
 #
 # Author:: Jamie Winsor (<jamie@vialstudios.com>)
+# Author:: Jason Nelson (<jason.nelson@rackspace.com>)
 #
 # Copyright 2012-2013, Riot Games
+# Copyright 2014. Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,18 +23,18 @@
 
 package 'libtool'
 
-country_dat          = "#{node['nginx']['geoip']['path']}/GeoIP.dat"
-country_src_filename = ::File.basename(node['nginx']['geoip']['country_dat_url'])
+country_dat          = "#{node['rackspace_nginx']['geoip']['path']}/GeoIP.dat"
+country_src_filename = ::File.basename(node['rackspace_nginx']['geoip']['country_dat_url'])
 country_src_filepath = "#{Chef::Config['file_cache_path']}/#{country_src_filename}"
 city_dat             = nil
-city_src_filename    = ::File.basename(node['nginx']['geoip']['city_dat_url'])
+city_src_filename    = ::File.basename(node['rackspace_nginx']['geoip']['city_dat_url'])
 city_src_filepath    = "#{Chef::Config['file_cache_path']}/#{city_src_filename}"
-geolib_filename      = ::File.basename(node['nginx']['geoip']['lib_url'])
+geolib_filename      = ::File.basename(node['rackspace_nginx']['geoip']['lib_url'])
 geolib_filepath      = "#{Chef::Config['file_cache_path']}/#{geolib_filename}"
 
 remote_file geolib_filepath do
-  source   node['nginx']['geoip']['lib_url']
-  checksum node['nginx']['geoip']['lib_checksum']
+  source   node['rackspace_nginx']['geoip']['lib_url']
+  checksum node['rackspace_nginx']['geoip']['lib_checksum']
   owner    'root'
   group    'root'
   mode     '0644'
@@ -42,16 +44,16 @@ bash 'extract_geolib' do
   cwd  ::File.dirname(geolib_filepath)
   code <<-EOH
     tar xzvf #{geolib_filepath} -C #{::File.dirname(geolib_filepath)}
-    cd GeoIP-#{node['nginx']['geoip']['lib_version']}
+    cd GeoIP-#{node['rackspace_nginx']['geoip']['lib_version']}
     which libtoolize && libtoolize -f
     ./configure
     make && make install
   EOH
-  creates    "/usr/local/lib/libGeoIP.so.#{node['nginx']['geoip']['lib_version']}"
+  creates    "/usr/local/lib/libGeoIP.so.#{node['rackspace_nginx']['geoip']['lib_version']}"
   subscribes :run, "remote_file[#{geolib_filepath}]"
 end
 
-directory node['nginx']['geoip']['path'] do
+directory node['rackspace_nginx']['geoip']['path'] do
   owner     'root'
   group     'root'
   mode      '0755'
@@ -63,8 +65,8 @@ remote_file country_src_filepath do
     File.exists?(country_src_filepath) &&
     File.mtime(country_src_filepath) > Time.now - 86_400
   end
-  source   node['nginx']['geoip']['country_dat_url']
-  checksum node['nginx']['geoip']['country_dat_checksum']
+  source   node['rackspace_nginx']['geoip']['country_dat_url']
+  checksum node['rackspace_nginx']['geoip']['country_dat_checksum']
   owner    'root'
   group    'root'
   mode     '0644'
@@ -77,16 +79,16 @@ bash 'gunzip_geo_lite_country_dat' do
   creates country_dat
 end
 
-if node['nginx']['geoip']['enable_city']
-  city_dat  = "#{node['nginx']['geoip']['path']}/GeoLiteCity.dat"
+if node['rackspace_nginx']['geoip']['enable_city']
+  city_dat  = "#{node['rackspace_nginx']['geoip']['path']}/GeoLiteCity.dat"
 
   remote_file city_src_filepath do
     not_if do
       File.exists?(city_src_filepath) &&
       File.mtime(city_src_filepath) > Time.now - 86_400
     end
-    source   node['nginx']['geoip']['city_dat_url']
-    checksum node['nginx']['geoip']['city_dat_checksum']
+    source   node['rackspace_nginx']['geoip']['city_dat_url']
+    checksum node['rackspace_nginx']['geoip']['city_dat_checksum']
     owner    'root'
     group    'root'
     mode     '0644'
@@ -100,7 +102,7 @@ if node['nginx']['geoip']['enable_city']
   end
 end
 
-template "#{node['nginx']['dir']}/conf.d/http_geoip.conf" do
+template "#{node['rackspace_nginx']['dir']}/conf.d/http_geoip.conf" do
   source 'modules/http_geoip.conf.erb'
   owner  'root'
   group  'root'

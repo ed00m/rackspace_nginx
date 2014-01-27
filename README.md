@@ -23,8 +23,9 @@ The following cookbook is not a strict dependency because its use can be control
 ### Platforms
 The following platforms are supported and tested under test kitchen:
 
-- Ubuntu 10.04, Ubuntu 12.04
-- CentOS 5.8, 6.3
+- Ubuntu 12.04
+- CentOS 6.4
+- Debian 7.2
 
 Other Debian and RHEL family distributions are assumed to work.
 
@@ -403,6 +404,16 @@ There's some redundancy in that the config handling hasn't been
 separated from the installation method (yet), so use only one of the
 recipes, default or source.
 
+Testing
+-------
+
+Pleas see testing guidelines at [contributing](https://github.com/rackspace-cookbooks/contributing/blob/master/CONTRIBUTING.md)
+
+Contributing
+------------
+
+Please see contributing guidelines at [contributing](https://github.com/rackspace-cookbooks/contributing/blob/master/CONTRIBUTING.md)
+
 
 License & Authors
 -----------------
@@ -410,6 +421,7 @@ License & Authors
 - Author:: Adam Jacob (<adam@opscode.com>)
 - Author:: AJ Christensen (<aj@opscode.com>)
 - Author:: Jamie Winsor (<jamie@vialstudios.com>)
+- Author:: Jason Nelson (<jason.nelson@rackspace.com>)
 
 ```text
 Copyright 2008-2013, Opscode, Inc

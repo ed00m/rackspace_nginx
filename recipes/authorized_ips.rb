@@ -1,10 +1,12 @@
 #
-# Cookbook Name:: nginx
+# Cookbook Name:: rackspace_nginx
 # Recipe:: authorized_ips
 #
 # Author:: Jamie Winsor (<jamie@vialstudios.com>)
+# Author:: Jason Nelson (<jason.nelson@rackspace.com>)
 #
 # Copyright 2012-2013, Riot Games
+# Copyright 2014. Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,11 +21,11 @@
 # limitations under the License.
 #
 
-node.default['nginx']['remote_ip_var']  = 'remote_addr'
-node.default['nginx']['authorized_ips'] = ['127.0.0.1/32']
+node.default['rackspace_nginx']['remote_ip_var']  = 'remote_addr'
+node.default['rackspace_nginx']['authorized_ips'] = ['127.0.0.1/32']
 
 template 'authorized_ip' do
-  path   "#{node['nginx']['dir']}/authorized_ip"
+  path   "#{node['rackspace_nginx']['dir']}/authorized_ip"
   source 'modules/authorized_ip.erb'
   owner  'root'
   group  'root'
