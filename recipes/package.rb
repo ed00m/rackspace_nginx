@@ -1,9 +1,11 @@
 #
-# Cookbook Name:: nginx
+# Cookbook Name:: rackspace_nginx
 # Recipe:: package
 # Author:: AJ Christensen <aj@junglist.gen.nz>
+# Author:: Jason Nelson (<jason.nelson@rackspace.com>)
 #
 # Copyright 2008-2013, Opscode, Inc.
+# Copyright 2014. Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,7 +25,7 @@ include_recipe 'rackspace_nginx::ohai_plugin'
 if platform_family?('rhel')
   if node['rackspace_nginx']['repo_source'] == 'epel'
     include_recipe 'rackspace_yum::epel'
-  elsif node['rackspace_nginx']['repo_source'] == 'rackspace_nginx'
+  elsif node['rackspace_nginx']['repo_source'] == 'nginx'
     include_recipe 'rackspace_nginx::repo'
   elsif node['rackspace_nginx']['repo_source'].nil?
     log "node['rackspace_nginx']['repo_source'] was not set, no additional yum repositories will be installed." do
@@ -33,7 +35,7 @@ if platform_family?('rhel')
     fail ArgumentError, "Unknown value '#{node['rackspace_nginx']['repo_source']}' was passed to the rackspace_nginx cookbook."
   end
 elsif platform_family?('debian')
-  if node['rackspace_nginx']['repo_source'] == 'rackspace_nginx'
+  if node['rackspace_nginx']['repo_source'] == 'nginx'
     include_recipe 'rackspace_nginx::repo'
   end
 end

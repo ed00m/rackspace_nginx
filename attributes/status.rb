@@ -1,10 +1,12 @@
 #
-# Cookbook Name:: nginx
+# Cookbook Name:: rackspace_nginx
 # Attributes:: status
 #
 # Author:: David Radcliffe (<radcliffe.david@gmail.com>)
+# Copyright 2012-2013, Riot Games
 #
 # Copyright 2013, David Radcliffe
+# Copyright 2014. Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,4 +21,4 @@
 # limitations under the License.
 #
 
-default['nginx']['status']['port'] = '8090'
+default['rackspace_nginx']['status']['port'] = '8090'

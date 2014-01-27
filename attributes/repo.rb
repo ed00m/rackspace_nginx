@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: nginx
+# Cookbook Name:: rackspace_nginx
 # Recipe:: repo
 #
 # Author:: Nick Rycar <nrycar@bluebox.net>
@@ -26,10 +26,10 @@ when 'rhel'
   case node['platform']
   when 'centos'
     # See http://wiki.nginx.org/Install
-    default['nginx']['upstream_repository'] = "http://nginx.org/packages/centos/#{node['platform_version'].to_i}/$basearch/"
+    default['rackspace_nginx']['upstream_repository'] = "http://nginx.org/packages/centos/#{node['platform_version'].to_i}/$basearch/"
   else
-    default['nginx']['upstream_repository'] = "http://nginx.org/packages/rhel/#{node['platform_version'].to_i}/$basearch/"
+    default['rackspace_nginx']['upstream_repository'] = "http://nginx.org/packages/rhel/#{node['platform_version'].to_i}/$basearch/"
   end
 when 'debian'
-  default['nginx']['upstream_repository'] = "http://nginx.org/packages/#{node['platform']}"
+  default['rackspace_nginx']['upstream_repository'] = "http://nginx.org/packages/#{node['platform']}"
 end
