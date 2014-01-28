@@ -24,6 +24,6 @@
 include_recipe 'rackspace_nginx::package'
 
 service 'nginx' do
-  supports :status => true, :restart => true, :reload => true
+  supports status: true, restart: true, reload: true
   action   :start
 end

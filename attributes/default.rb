@@ -39,7 +39,7 @@ when 'debian'
 when 'rhel'
   default['rackspace_nginx']['user']        = 'nginx'
   default['rackspace_nginx']['init_style']  = 'init'
-  default['rackspace_nginx']['repo_source'] = 'epel'
+  default['rackspace_nginx']['repo_source'] = 'nginx'
 else
   default['rackspace_nginx']['user']       = 'www-data'
   default['rackspace_nginx']['init_style'] = 'init'

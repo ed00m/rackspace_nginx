@@ -8,7 +8,7 @@ platforms:
     box: opscode-ubuntu-12.04
     box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-12.04_chef-provisionerless.box
     run_list:
-      - recipe[apt]
+      - recipe[rackspace_apt]
   - name: centos-6.4
     driver_config:
     box: opscode-centos-6.4
@@ -18,18 +18,12 @@ platforms:
     box: opscode-debian-7.2.0
     box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_debian-7.2.0_chef-provisionerless.box
   run_list:
-  - recipe[apt]
+  - recipe[rackspace_apt]
 
 suites:
   - name: default
     run_list:
       - recipe[nginx::default]
-  - name: source
-    run_list:
-      - recipe[nginx::default]
-    attributes:
-      nginx:
-        install_method: source
   - name: upstream_repo
     run_list:
       - recipe[nginx::repo]
@@ -37,23 +31,3 @@ suites:
     attributes:
       nginx:
         repo_source: nginx
-  - name: modules
-    run_list:
-      - recipe[nginx::source]
-    attributes:
-      nginx:
-        modules:
-          - nginx::headers_more_module
-          - nginx::http_auth_request_module
-          - nginx::http_echo_module
-          - nginx::http_geoip_module
-          - nginx::http_gzip_static_module
-          - nginx::http_realip_module
-          - nginx::http_spdy_module
-          - nginx::http_ssl_module
-          - nginx::http_stub_status_module
-          - nginx::naxsi_module
-          - nginx::ngx_devel_module
-          - nginx::ngx_lua_module
-          - nginx::openssl_source
-          - nginx::upload_progress_module

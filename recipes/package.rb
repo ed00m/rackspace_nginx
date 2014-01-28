@@ -23,9 +23,7 @@
 include_recipe 'rackspace_nginx::ohai_plugin'
 
 if platform_family?('rhel')
-  if node['rackspace_nginx']['repo_source'] == 'epel'
-    include_recipe 'rackspace_yum::epel'
-  elsif node['rackspace_nginx']['repo_source'] == 'nginx'
+  if node['rackspace_nginx']['repo_source'] == 'nginx'
     include_recipe 'rackspace_nginx::repo'
   elsif node['rackspace_nginx']['repo_source'].nil?
     log "node['rackspace_nginx']['repo_source'] was not set, no additional yum repositories will be installed." do
@@ -44,8 +42,8 @@ package node['rackspace_nginx']['package_name'] do
   notifies :reload, 'ohai[reload_nginx]', :immediately
 end
 
-service 'rackspace_nginx' do
-  supports :status => true, :restart => true, :reload => true
+service 'nginx' do
+  supports status: true, restart: true, reload: true
   action   :enable
 end
 

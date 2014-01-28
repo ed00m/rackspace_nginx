@@ -21,7 +21,7 @@
 # limitations under the License.
 #
 
-define :nginx_site, :enable => true, :timing => :delayed do
+define :nginx_site, enable: true, timing: :delayed do
   if params[:enable]
     execute "nxensite #{params[:name]}" do
       command "#{node['rackspace_nginx']['script_dir']}/nxensite #{params[:name]}"
