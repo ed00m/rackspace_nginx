@@ -1,3 +1,0 @@
-#!/bin/sh
-exec 2>&1
-exec <%= node['rackspace_nginx']['src_binary'] %> -c <%= node['rackspace_nginx']['dir'] %>/nginx.conf
