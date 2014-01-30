@@ -16,11 +16,11 @@
 # limitations under the License.
 #
 
-provides "nginx"
-provides "nginx/version"
-provides "nginx/configure_arguments"
-provides "nginx/prefix"
-provides "nginx/conf_path"
+provides "rackspace_nginx"
+provides "rackspace_nginx/version"
+provides "rackspace_nginx/configure_arguments"
+provides "rackspace_nginx/prefix"
+provides "rackspace_nginx/conf_path"
 
 def parse_flags(flags)
   prefix = nil
@@ -38,13 +38,13 @@ def parse_flags(flags)
   [ prefix, conf_path ]
 end
 
-nginx Mash.new unless nginx
-nginx[:version]             = nil unless nginx[:version]
-nginx[:configure_arguments] = Array.new unless nginx[:configure_arguments]
-nginx[:prefix]              = nil unless nginx[:prefix]
-nginx[:conf_path]           = nil unless nginx[:conf_path]
+rackspace_nginx Mash.new unless rackspace_nginx
+rackspace_nginx[:version]             = nil unless rackspace_nginx[:version]
+rackspace_nginx[:configure_arguments] = Array.new unless rackspace_nginx[:configure_arguments]
+rackspace_nginx[:prefix]              = nil unless rackspace_nginx[:prefix]
+rackspace_nginx[:conf_path]           = nil unless rackspace_nginx[:conf_path]
 
-status, stdout, stderr = run_command(:no_status_check => true, :command => "<%= node['nginx']['binary'] %> -V")
+status, stdout, stderr = run_command(:no_status_check => true, :command => "<%= node['rackspace_nginx']['binary'] %> -V")
 
 if status == 0
   stderr.split("\n").each do |line|
@@ -53,14 +53,14 @@ if status == 0
       # This could be better: I'm splitting on configure arguments which removes them and also
       # adds a blank string at index 0 of the array. This is why we drop index 0 and map to
       # add the '--' prefix back to the configure argument.
-      nginx[:configure_arguments] = $1.split(/\s--/).drop(1).map { |ca| "--#{ca}" }
+      rackspace_nginx[:configure_arguments] = $1.split(/\s--/).drop(1).map { |ca| "--#{ca}" }
 
-      prefix, conf_path = parse_flags(nginx[:configure_arguments])
+      prefix, conf_path = parse_flags(rackspace_nginx[:configure_arguments])
 
-      nginx[:prefix] = prefix
-      nginx[:conf_path] = conf_path
-    when /^nginx version: nginx\/(.+)/
-      nginx[:version] = $1
+      rackspace_nginx[:prefix] = prefix
+      rackspace_nginx[:conf_path] = conf_path
+    when /^rackspace_nginx version: rackspace_nginx\/(.+)/
+      rackspace_nginx[:version] = $1
     end
   end
 end
