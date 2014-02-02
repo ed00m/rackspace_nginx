@@ -1,81 +1,81 @@
-user <%= node['rackspace_nginx']['user'] %><% if node['rackspace_nginx']['user'] != node['rackspace_nginx']['group'] %> <%= node['rackspace_nginx']['group'] %><% end %>;
-worker_processes  <%= node['rackspace_nginx']['worker_processes'] %>;
-<% if node['rackspace_nginx']['daemon_disable'] -%>
+user <%= node['rackspace_nginx']['config']['user'] %><% if node['rackspace_nginx']['config']['user'] != node['rackspace_nginx']['config']['group'] %> <%= node['rackspace_nginx']['config']['group'] %><% end %>;
+worker_processes  <%= node['rackspace_nginx']['config']['worker_processes'] %>;
+<% if node['rackspace_nginx']['config']['daemon_disable'] -%>
 daemon off;
 <% end -%>
-<% if node['rackspace_nginx']['worker_rlimit_nofile'] -%>
-worker_rlimit_nofile <%= node['rackspace_nginx']['worker_rlimit_nofile'] %>;
+<% if node['rackspace_nginx']['config']['worker_rlimit_nofile'] -%>
+worker_rlimit_nofile <%= node['rackspace_nginx']['config']['worker_rlimit_nofile'] %>;
 <% end -%>
 
-error_log  <%= node['rackspace_nginx']['log_dir'] %>/error.log<% if node['rackspace_nginx']['error_log_options'] %> <%= node['rackspace_nginx']['error_log_options'] %><% end %>;
-pid        <%= node['rackspace_nginx']['pid'] %>;
+error_log  <%= node['rackspace_nginx']['config']['log_dir'] %>/error.log<% if node['rackspace_nginx']['config']['error_log_options'] %> <%= node['rackspace_nginx']['config']['error_log_options'] %><% end %>;
+pid        <%= node['rackspace_nginx']['config']['pid'] %>;
 
 events {
-  worker_connections  <%= node['rackspace_nginx']['worker_connections'] %>;
-<% if node['rackspace_nginx']['multi_accept'] -%>
+  worker_connections  <%= node['rackspace_nginx']['config']['worker_connections'] %>;
+<% if node['rackspace_nginx']['config']['multi_accept'] -%>
   multi_accept on;
 <% end -%>
-<% if node['rackspace_nginx']['event'] -%>
-  use <%= node['rackspace_nginx']['event'] %>;
+<% if node['rackspace_nginx']['config']['event'] -%>
+  use <%= node['rackspace_nginx']['config']['event'] %>;
 <% end -%>
 }
 
 http {
   <% if node.recipe?('nginx::naxsi_module') %>
-  include       <%= node['rackspace_nginx']['dir'] %>/naxsi_core.rules;
+  include       <%= node['rackspace_nginx']['config']['dir'] %>/naxsi_core.rules;
   <% end %>
 
-  include       <%= node['rackspace_nginx']['dir'] %>/mime.types;
+  include       <%= node['rackspace_nginx']['config']['dir'] %>/mime.types;
   default_type  application/octet-stream;
 
-  <% if node['rackspace_nginx']['disable_access_log'] -%>
+  <% if node['rackspace_nginx']['config']['disable_access_log'] -%>
   access_log    off;
   <% else -%>
-  access_log	<%= node['rackspace_nginx']['log_dir'] %>/access.log<% if node['rackspace_nginx']['access_log_options'] %> <%= node['rackspace_nginx']['access_log_options'] %><% end %>;
+  access_log	<%= node['rackspace_nginx']['config']['log_dir'] %>/access.log<% if node['rackspace_nginx']['config']['access_log_options'] %> <%= node['rackspace_nginx']['config']['access_log_options'] %><% end %>;
   <% end %>
-  <% if node['rackspace_nginx']['server_tokens'] -%>
-  server_tokens <%= node['rackspace_nginx']['server_tokens'] %>;
+  <% if node['rackspace_nginx']['config']['server_tokens'] -%>
+  server_tokens <%= node['rackspace_nginx']['config']['server_tokens'] %>;
   <% end -%>
 
-  sendfile <%= node['rackspace_nginx']['sendfile'] %>;
+  sendfile <%= node['rackspace_nginx']['config']['sendfile'] %>;
   tcp_nopush on;
   tcp_nodelay on;
 
-  <% if node['rackspace_nginx']['keepalive'] == 'on' %>
-  keepalive_timeout  <%= node['rackspace_nginx']['keepalive_timeout'] %>;
+  <% if node['rackspace_nginx']['config']['keepalive'] == 'on' %>
+  keepalive_timeout  <%= node['rackspace_nginx']['config']['keepalive_timeout'] %>;
   <% end %>
 
-  gzip  <%= node['rackspace_nginx']['gzip'] %>;
-  <% if node['rackspace_nginx']['gzip'] == 'on' %>
-  gzip_http_version <%= node['rackspace_nginx']['gzip_http_version'] %>;
-  gzip_comp_level <%= node['rackspace_nginx']['gzip_comp_level'] %>;
-  gzip_proxied <%= node['rackspace_nginx']['gzip_proxied'] %>;
-  gzip_vary <%= node['rackspace_nginx']['gzip_vary'] %>;
-  <% if node['rackspace_nginx']['gzip_buffers'] -%>
-  gzip_buffers <%= node['rackspace_nginx']['gzip_buffers'] %>;
+  gzip  <%= node['rackspace_nginx']['config']['gzip'] %>;
+  <% if node['rackspace_nginx']['config']['gzip'] == 'on' %>
+  gzip_http_version <%= node['rackspace_nginx']['config']['gzip_http_version'] %>;
+  gzip_comp_level <%= node['rackspace_nginx']['config']['gzip_comp_level'] %>;
+  gzip_proxied <%= node['rackspace_nginx']['config']['gzip_proxied'] %>;
+  gzip_vary <%= node['rackspace_nginx']['config']['gzip_vary'] %>;
+  <% if node['rackspace_nginx']['config']['gzip_buffers'] -%>
+  gzip_buffers <%= node['rackspace_nginx']['config']['gzip_buffers'] %>;
   <% end -%>
-  gzip_types <%= node['rackspace_nginx']['gzip_types'].join(' ') %>;
-  gzip_min_length  <%= node['rackspace_nginx']['gzip_min_length'] %>;
-  gzip_disable     "<%= node['rackspace_nginx']['gzip_disable'] %>";
+  gzip_types <%= node['rackspace_nginx']['config']['gzip_types'].join(' ') %>;
+  gzip_min_length  <%= node['rackspace_nginx']['config']['gzip_min_length'] %>;
+  gzip_disable     "<%= node['rackspace_nginx']['config']['gzip_disable'] %>";
   <% end %>
 
-  server_names_hash_bucket_size <%= node['rackspace_nginx']['server_names_hash_bucket_size'] %>;
-  types_hash_max_size <%= node['rackspace_nginx']['types_hash_max_size'] %>;
-  types_hash_bucket_size <%= node['rackspace_nginx']['types_hash_bucket_size'] %>;
-  <% if node['rackspace_nginx']['proxy_read_timeout'] -%>
-  proxy_read_timeout <%= node['rackspace_nginx']['proxy_read_timeout'] %>;
+  server_names_hash_bucket_size <%= node['rackspace_nginx']['config']['server_names_hash_bucket_size'] %>;
+  types_hash_max_size <%= node['rackspace_nginx']['config']['types_hash_max_size'] %>;
+  types_hash_bucket_size <%= node['rackspace_nginx']['config']['types_hash_bucket_size'] %>;
+  <% if node['rackspace_nginx']['config']['proxy_read_timeout'] -%>
+  proxy_read_timeout <%= node['rackspace_nginx']['config']['proxy_read_timeout'] %>;
   <% end -%>
-  <% if node['rackspace_nginx']['client_body_buffer_size'] -%>
-  client_body_buffer_size <%= node['rackspace_nginx']['client_body_buffer_size'] %>;
+  <% if node['rackspace_nginx']['config']['client_body_buffer_size'] -%>
+  client_body_buffer_size <%= node['rackspace_nginx']['config']['client_body_buffer_size'] %>;
   <% end -%>
-  <% if node['rackspace_nginx']['client_max_body_size'] -%>
-  client_max_body_size <%= node['rackspace_nginx']['client_max_body_size'] %>;
+  <% if node['rackspace_nginx']['config']['client_max_body_size'] -%>
+  client_max_body_size <%= node['rackspace_nginx']['config']['client_max_body_size'] %>;
   <% end -%>
 
-  <% if node['rackspace_nginx']['enable_rate_limiting'] -%>
-  limit_req_zone $binary_remote_addr zone=<%= node['rackspace_nginx']['rate_limiting_zone_name'] %>:<%= node['rackspace_nginx']['rate_limiting_backoff'] %> rate=<%= node['rackspace_nginx']['rate_limit'] %>;
+  <% if node['rackspace_nginx']['config']['enable_rate_limiting'] -%>
+  limit_req_zone $binary_remote_addr zone=<%= node['rackspace_nginx']['config']['rate_limiting_zone_name'] %>:<%= node['rackspace_nginx']['config']['rate_limiting_backoff'] %> rate=<%= node['rackspace_nginx']['config']['rate_limit'] %>;
 
   <% end -%>
-  include <%= node['rackspace_nginx']['dir'] %>/conf.d/*.conf;
-  include <%= node['rackspace_nginx']['dir'] %>/sites-enabled/*;
+  include <%= node['rackspace_nginx']['config']['dir'] %>/conf.d/*.conf;
+  include <%= node['rackspace_nginx']['config']['dir'] %>/sites-enabled/*;
 }

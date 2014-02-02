@@ -21,21 +21,21 @@
 # limitations under the License.
 #
 
-directory node['rackspace_nginx']['dir'] do
+directory node['rackspace_nginx']['config']['dir'] do
   owner     'root'
   group     'root'
   mode      '0755'
   recursive true
 end
 
-directory node['rackspace_nginx']['log_dir'] do
+directory node['rackspace_nginx']['config']['log_dir'] do
   mode      '0755'
-  owner     node['rackspace_nginx']['user']
+  owner     node['rackspace_nginx']['config']['user']
   action    :create
   recursive true
 end
 
-directory File.dirname(node['rackspace_nginx']['pid']) do
+directory File.dirname(node['rackspace_nginx']['config']['pid']) do
   owner     'root'
   group     'root'
   mode      '0755'
@@ -43,7 +43,7 @@ directory File.dirname(node['rackspace_nginx']['pid']) do
 end
 
 %w[sites-available sites-enabled conf.d].each do |leaf|
-  directory File.join(node['rackspace_nginx']['dir'], leaf) do
+  directory File.join(node['rackspace_nginx']['config']['dir'], leaf) do
     owner 'root'
     group 'root'
     mode  '0755'

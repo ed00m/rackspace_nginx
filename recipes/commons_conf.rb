@@ -22,7 +22,7 @@
 #
 
 template 'nginx.conf' do
-  path   "#{node['rackspace_nginx']['dir']}/nginx.conf"
+  path   "#{node['rackspace_nginx']['config']['dir']}/nginx.conf"
   source 'nginx.conf.erb'
   owner  'root'
   group  'root'
@@ -30,7 +30,7 @@ template 'nginx.conf' do
   notifies :reload, 'service[nginx]'
 end
 
-template "#{node['rackspace_nginx']['dir']}/sites-available/default" do
+template "#{node['rackspace_nginx']['config']['dir']}/sites-available/default" do
   source 'default-site.erb'
   owner  'root'
   group  'root'
