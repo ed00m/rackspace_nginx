@@ -1,4 +1,4 @@
-nginx Cookbook
+rackspace_nginx Cookbook
 ==============
 
 Installs nginx from package and sets up configuration handling similar to Debian's Apache2 scripts.
