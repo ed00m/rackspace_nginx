@@ -1,9 +1,11 @@
 #
-# Cookbook Name:: nginx
+# Cookbook Name:: rackspace_nginx
 # Recipe:: repo
 # Author:: Nick Rycar <nrycar@bluebox.net>
+# Author:: Jason Nelson (<jason.nelson@rackspace.com>)
 #
 # Copyright 2008-2013, Opscode, Inc.
+# Copyright 2014. Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,25 +21,25 @@
 #
 
 case node['platform_family']
-when 'rhel', 'fedora'
-  include_recipe 'yum::default'
+when 'rhel'
+  include_recipe 'rackspace_yum::default'
 
-  yum_key 'nginx' do
+  rackspace_yum_key 'nginx' do
     url    'http://nginx.org/keys/nginx_signing.key'
     key    'RPM-GPG-KEY-Nginx'
     action :add
   end
 
-  yum_repository 'nginx' do
+  rackspace_yum_repository 'nginx' do
     description 'Nginx.org Repository'
-    url         node['nginx']['upstream_repository']
-    key         'RPM-GPG-KEY-Nginx'
+    url         node['rackspace_nginx']['upstream_repository']
   end
-when 'debian'
-  include_recipe 'apt::default'
 
-  apt_repository 'nginx' do
-    uri          node['nginx']['upstream_repository']
+when 'debian'
+  include_recipe 'rackspace_apt::default'
+
+  rackspace_apt_repository 'nginx' do
+    uri          node['rackspace_nginx']['upstream_repository']
     distribution node['lsb']['codename']
     components   %w[nginx]
     deb_src      true

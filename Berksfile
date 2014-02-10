@@ -1,7 +1,5 @@
-site :opscode
 metadata
 
-group :integration do
-  cookbook 'apt', '~> 2.0'
-  cookbook 'minitest-handler'
-end
+cookbook 'ohai', github: 'rackspace-cookbooks/ohai'
+cookbook 'rackspace_apt', github: 'rackspace-cookbooks/rackspace_apt'
+cookbook 'rackspace_yum', github: 'rackspace-cookbooks/rackspace_yum'

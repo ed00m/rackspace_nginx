@@ -1,11 +1,13 @@
 #
-# Cookbook Name:: nginx
+# Cookbook Name:: rackspace_nginx
 # Attributes:: default
 #
 # Author:: Adam Jacob (<adam@opscode.com>)
 # Author:: Joshua Timberman (<joshua@opscode.com>)
+# Author:: Jason Nelson (<jason.nelson@rackspace.com>)
 #
 # Copyright 2009-2013, Opscode, Inc.
+# Copyright 2014, Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,78 +25,72 @@
 # In order to update the version, the checksum attribute must be changed too.
 # This attribute is in the source.rb file, though we recommend overriding
 # attributes by modifying a role, or the node itself.
-default['nginx']['version']      = '1.2.9'
-default['nginx']['package_name'] = 'nginx'
-default['nginx']['dir']          = '/etc/nginx'
-default['nginx']['script_dir']   = '/usr/sbin'
-default['nginx']['log_dir']      = '/var/log/nginx'
-default['nginx']['binary']       = '/usr/sbin/nginx'
+default['rackspace_nginx']['version']              = '1.2.9'
+default['rackspace_nginx']['package_name']         = 'nginx'
+default['rackspace_nginx']['config']['dir']        = '/etc/nginx'
+default['rackspace_nginx']['config']['script_dir'] = '/usr/sbin'
+default['rackspace_nginx']['config']['log_dir']    = '/var/log/nginx'
+default['rackspace_nginx']['binary']               = '/usr/sbin/nginx'
 
 case node['platform_family']
 when 'debian'
-  default['nginx']['user']       = 'www-data'
-  default['nginx']['init_style'] = 'runit'
-when 'rhel', 'fedora'
-  default['nginx']['user']        = 'nginx'
-  default['nginx']['init_style']  = 'init'
-  default['nginx']['repo_source'] = 'epel'
-when 'gentoo'
-  default['nginx']['user']       = 'nginx'
-  default['nginx']['init_style'] = 'init'
+  default['rackspace_nginx']['config']['user'] = 'www-data'
+when 'rhel'
+  default['rackspace_nginx']['config']['user'] = 'nginx'
+  default['rackspace_nginx']['repo_source']    = 'nginx'
 else
-  default['nginx']['user']       = 'www-data'
-  default['nginx']['init_style'] = 'init'
+  default['rackspace_nginx']['config']['user'] = 'www-data'
 end
 
-default['nginx']['upstart']['runlevels']     = '2345'
-default['nginx']['upstart']['respawn_limit'] = nil
-default['nginx']['upstart']['foreground']    = true
+default['rackspace_nginx']['upstart']['runlevels']     = '2345'
+default['rackspace_nginx']['upstart']['respawn_limit'] = nil
+default['rackspace_nginx']['upstart']['foreground']    = true
 
-default['nginx']['group'] = node['nginx']['user']
+default['rackspace_nginx']['config']['group'] = node['rackspace_nginx']['config']['user']
 
-default['nginx']['pid'] = '/var/run/nginx.pid'
+default['rackspace_nginx']['config']['pid'] = '/var/run/nginx.pid'
 
-default['nginx']['gzip']              = 'on'
-default['nginx']['gzip_http_version'] = '1.0'
-default['nginx']['gzip_comp_level']   = '2'
-default['nginx']['gzip_proxied']      = 'any'
-default['nginx']['gzip_vary']         = 'off'
-default['nginx']['gzip_buffers']      = nil
-default['nginx']['gzip_types']        = %w[
-                                          text/plain
-                                          text/css
-                                          application/x-javascript
-                                          text/xml
-                                          application/xml
-                                          application/rss+xml
-                                          application/atom+xml
-                                          text/javascript
-                                          application/javascript
-                                          application/json
-                                          text/mathml
-                                        ]
-default['nginx']['gzip_min_length']   = 1_000
-default['nginx']['gzip_disable']      = 'MSIE [1-6]\.'
+default['rackspace_nginx']['config']['gzip']              = 'on'
+default['rackspace_nginx']['config']['gzip_http_version'] = '1.0'
+default['rackspace_nginx']['config']['gzip_comp_level']   = '2'
+default['rackspace_nginx']['config']['gzip_proxied']      = 'any'
+default['rackspace_nginx']['config']['gzip_vary']         = 'off'
+default['rackspace_nginx']['config']['gzip_buffers']      = nil
+default['rackspace_nginx']['config']['gzip_types']        = %w[
+                                                    text/plain
+                                                    text/css
+                                                    application/x-javascript
+                                                    text/xml
+                                                    application/xml
+                                                    application/rss+xml
+                                                    application/atom+xml
+                                                    text/javascript
+                                                    application/javascript
+                                                    application/json
+                                                    text/mathml
+                                                  ]
+default['rackspace_nginx']['config']['gzip_min_length']   = 1_000
+default['rackspace_nginx']['config']['gzip_disable']      = 'MSIE [1-6]\.'
 
-default['nginx']['keepalive']            = 'on'
-default['nginx']['keepalive_timeout']    = 65
-default['nginx']['worker_processes']     = node['cpu'] && node['cpu']['total'] ? node['cpu']['total'] : 1
-default['nginx']['worker_connections']   = 1_024
-default['nginx']['worker_rlimit_nofile'] = nil
-default['nginx']['multi_accept']         = false
-default['nginx']['event']                = nil
-default['nginx']['server_tokens']        = nil
-default['nginx']['server_names_hash_bucket_size'] = 64
-default['nginx']['sendfile'] = 'on'
+default['rackspace_nginx']['config']['keepalive']            = 'on'
+default['rackspace_nginx']['config']['keepalive_timeout']    = 65
+default['rackspace_nginx']['config']['worker_processes']     = node['cpu'] && node['cpu']['total'] ? node['cpu']['total'] : 1
+default['rackspace_nginx']['config']['worker_connections']   = 1_024
+default['rackspace_nginx']['config']['worker_rlimit_nofile'] = nil
+default['rackspace_nginx']['config']['multi_accept']         = false
+default['rackspace_nginx']['config']['event']                = nil
+default['rackspace_nginx']['config']['server_tokens']        = nil
+default['rackspace_nginx']['config']['server_names_hash_bucket_size'] = 64
+default['rackspace_nginx']['config']['sendfile'] = 'on'
 
-default['nginx']['access_log_options']     = nil
-default['nginx']['error_log_options']      = nil
-default['nginx']['disable_access_log']     = false
-default['nginx']['install_method']         = 'package'
-default['nginx']['default_site_enabled']   = true
-default['nginx']['types_hash_max_size']    = 2_048
-default['nginx']['types_hash_bucket_size'] = 64
+default['rackspace_nginx']['config']['access_log_options']     = nil
+default['rackspace_nginx']['config']['error_log_options']      = nil
+default['rackspace_nginx']['config']['disable_access_log']     = false
+default['rackspace_nginx']['config']['install_method']         = 'package'
+default['rackspace_nginx']['config']['default_site_enabled']   = true
+default['rackspace_nginx']['config']['types_hash_max_size']    = 2_048
+default['rackspace_nginx']['config']['types_hash_bucket_size'] = 64
 
-default['nginx']['proxy_read_timeout']      = nil
-default['nginx']['client_body_buffer_size'] = nil
-default['nginx']['client_max_body_size']    = nil
+default['rackspace_nginx']['config']['proxy_read_timeout']      = nil
+default['rackspace_nginx']['config']['client_body_buffer_size'] = nil
+default['rackspace_nginx']['config']['client_max_body_size']    = nil

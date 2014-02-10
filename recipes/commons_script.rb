@@ -1,10 +1,12 @@
 #
-# Cookbook Name:: nginx
+# Cookbook Name:: rackspace_nginx
 # Recipe:: common/script
 #
 # Author:: AJ Christensen <aj@junglist.gen.nz>
+# Author:: Jason Nelson (<jason.nelson@rackspace.com>)
 #
 # Copyright 2008-2013, Opscode, Inc.
+# Copyright 2014. Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,7 +22,7 @@
 #
 
 %w[nxensite nxdissite].each do |nxscript|
-  template "#{node['nginx']['script_dir']}/#{nxscript}" do
+  template "#{node['rackspace_nginx']['config']['script_dir']}/#{nxscript}" do
     source "#{nxscript}.erb"
     mode   '0755'
     owner  'root'

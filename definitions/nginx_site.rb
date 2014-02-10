@@ -1,10 +1,12 @@
 #
-# Cookbook Name:: nginx
+# Cookbook Name:: rackspace_nginx
 # Definition:: nginx_site
 #
 # Author:: AJ Christensen <aj@junglist.gen.nz>
+# Author:: Jason Nelson (<jason.nelson@rackspace.com>)
 #
 # Copyright 2008-2013, Opscode, Inc.
+# Copyright 2014. Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,23 +21,23 @@
 # limitations under the License.
 #
 
-define :nginx_site, :enable => true, :timing => :delayed do
+define :nginx_site, enable: true, timing: :delayed do
   if params[:enable]
     execute "nxensite #{params[:name]}" do
-      command "#{node['nginx']['script_dir']}/nxensite #{params[:name]}"
+      command "#{node['rackspace_nginx']['config']['script_dir']}/nxensite #{params[:name]}"
       notifies :reload, 'service[nginx]', params[:timing]
       not_if do
-        ::File.symlink?("#{node['nginx']['dir']}/sites-enabled/#{params[:name]}") ||
-          ::File.symlink?("#{node['nginx']['dir']}/sites-enabled/000-#{params[:name]}")
+        ::File.symlink?("#{node['rackspace_nginx']['config']['dir']}/sites-enabled/#{params[:name]}") ||
+          ::File.symlink?("#{node['rackspace_nginx']['config']['dir']}/sites-enabled/000-#{params[:name]}")
       end
     end
   else
     execute "nxdissite #{params[:name]}" do
-      command "#{node['nginx']['script_dir']}/nxdissite #{params[:name]}"
+      command "#{node['rackspace_nginx']['config']['script_dir']}/nxdissite #{params[:name]}"
       notifies :reload, 'service[nginx]', params[:timing]
       only_if do
-        ::File.symlink?("#{node['nginx']['dir']}/sites-enabled/#{params[:name]}") ||
-          ::File.symlink?("#{node['nginx']['dir']}/sites-enabled/000-#{params[:name]}")
+        ::File.symlink?("#{node['rackspace_nginx']['config']['dir']}/sites-enabled/#{params[:name]}") ||
+          ::File.symlink?("#{node['rackspace_nginx']['config']['dir']}/sites-enabled/000-#{params[:name]}")
       end
     end
   end

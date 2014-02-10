@@ -1,9 +1,11 @@
 #
-# Cookbook Name:: nginx
+# Cookbook Name:: rackspace_nginx
 # Recipe:: package
 # Author:: AJ Christensen <aj@junglist.gen.nz>
+# Author:: Jason Nelson (<jason.nelson@rackspace.com>)
 #
 # Copyright 2008-2013, Opscode, Inc.
+# Copyright 2014. Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,33 +20,31 @@
 # limitations under the License.
 #
 
-include_recipe 'nginx::ohai_plugin'
+include_recipe 'rackspace_nginx::ohai_plugin'
 
 if platform_family?('rhel')
-  if node['nginx']['repo_source'] == 'epel'
-    include_recipe 'yum::epel'
-  elsif node['nginx']['repo_source'] == 'nginx'
-    include_recipe 'nginx::repo'
-  elsif node['nginx']['repo_source'].nil?
-    log "node['nginx']['repo_source'] was not set, no additional yum repositories will be installed." do
+  if node['rackspace_nginx']['repo_source'] == 'nginx'
+    include_recipe 'rackspace_nginx::repo'
+  elsif node['rackspace_nginx']['repo_source'].nil?
+    log "node['rackspace_nginx']['repo_source'] was not set, no additional yum repositories will be installed." do
       level :debug
     end
   else
-    fail ArgumentError, "Unknown value '#{node['nginx']['repo_source']}' was passed to the nginx cookbook."
+    fail ArgumentError, "Unknown value '#{node['rackspace_nginx']['repo_source']}' was passed to the rackspace_nginx cookbook."
   end
 elsif platform_family?('debian')
-  if node['nginx']['repo_source'] == 'nginx'
-    include_recipe 'nginx::repo'
+  if node['rackspace_nginx']['repo_source'] == 'nginx'
+    include_recipe 'rackspace_nginx::repo'
   end
 end
 
-package node['nginx']['package_name'] do
+package node['rackspace_nginx']['package_name'] do
   notifies :reload, 'ohai[reload_nginx]', :immediately
 end
 
 service 'nginx' do
-  supports :status => true, :restart => true, :reload => true
+  supports status: true, restart: true, reload: true
   action   :enable
 end
 
-include_recipe 'nginx::commons'
+include_recipe 'rackspace_nginx::commons'
