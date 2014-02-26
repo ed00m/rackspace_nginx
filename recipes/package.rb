@@ -39,7 +39,10 @@ elsif platform_family?('debian')
 end
 
 package node['rackspace_nginx']['package_name'] do
+  version node['rackspace_nginx']['package_version']
+
   notifies :reload, 'ohai[reload_nginx]', :immediately
+  notifies :reload, 'service[nginx]'
 end
 
 service 'nginx' do

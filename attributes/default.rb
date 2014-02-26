@@ -27,6 +27,7 @@
 # attributes by modifying a role, or the node itself.
 default['rackspace_nginx']['version']              = '1.2.9'
 default['rackspace_nginx']['package_name']         = 'nginx'
+default['rackspace_nginx']['package_version']      = nil
 default['rackspace_nginx']['config']['dir']        = '/etc/nginx'
 default['rackspace_nginx']['config']['script_dir'] = '/usr/sbin'
 default['rackspace_nginx']['config']['log_dir']    = '/var/log/nginx'
