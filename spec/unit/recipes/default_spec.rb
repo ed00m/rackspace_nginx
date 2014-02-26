@@ -22,6 +22,12 @@ describe 'rackspace_nginx::default' do
       expect(chef_run).to install_package('nginx')
     end
 
+    it 'installs a specific version when specified' do
+      chef_run.node.set['rackspace_nginx']['package_version'] = '1.4.5'
+      chef_run.converge(described_recipe)
+      expect(chef_run).to install_package('nginx').with(version: '1.4.5')
+    end
+
     it 'enables the service' do
       expect(chef_run).to enable_service('nginx')
     end
