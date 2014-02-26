@@ -44,5 +44,7 @@ when 'debian'
     components   %w[nginx]
     deb_src      true
     key          'http://nginx.org/keys/nginx_signing.key'
+    # this apt-get update resource is from rackspace_apt::default
+    notifies     :run, 'execute[apt-get update]', :immediately
   end
 end
