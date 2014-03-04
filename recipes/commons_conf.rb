@@ -41,3 +41,12 @@ end
 nginx_site 'default' do
   enable node['rackspace_nginx']['default_site_enabled']
 end
+
+template "#{node['rackspace_nginx']['config']['dir']}/fastcgi_params" do
+  source 'fastcgi_params.erb'
+  mode 0644
+  owner 'root'
+  group 'root'
+  notifies :reload, 'service[nginx]'
+  only_if { node['rackspace_nginx']['fastcgi_params'] }
+end

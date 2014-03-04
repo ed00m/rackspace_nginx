@@ -3,7 +3,7 @@ maintainer        'Rackspace, US Inc.'
 maintainer_email  'rackspace-cookbooks@rackspace.com'
 license           'Apache 2.0'
 description       'Installs and configures nginx'
-version           '3.0.2'
+version           '3.1.0'
 
 recipe 'rackspace_nginx',         'Installs nginx package and sets up configuration with Debian apache style with sites-enabled/sites-available'
 

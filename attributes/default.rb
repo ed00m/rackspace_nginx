@@ -43,6 +43,8 @@ else
   default['rackspace_nginx']['config']['user'] = 'www-data'
 end
 
+default['rackspace_nginx']['fastcgi_params'] = false
+
 default['rackspace_nginx']['upstart']['runlevels']     = '2345'
 default['rackspace_nginx']['upstart']['respawn_limit'] = nil
 default['rackspace_nginx']['upstart']['foreground']    = true
