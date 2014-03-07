@@ -39,7 +39,7 @@ template "#{node['rackspace_nginx']['config']['dir']}/sites-available/default" d
 end
 
 nginx_site 'default' do
-  enable node['rackspace_nginx']['default_site_enabled']
+  enable node['rackspace_nginx']['config']['default_site_enabled']
 end
 
 template "#{node['rackspace_nginx']['config']['dir']}/fastcgi_params" do
