@@ -40,4 +40,35 @@ describe 'rackspace_nginx::default' do
   it 'starts the service' do
     expect(chef_run).to start_service('nginx')
   end
+  it 'populate the /etc/nginx' do
+    expect(chef_run).to create_directory('/etc/nginx')
+  end
+  it 'populate the /var/log/nginx' do
+    expect(chef_run).to create_directory('/var/log/nginx')
+  end
+  it 'populate the /var/run' do
+    expect(chef_run).to create_directory('/var/run')
+  end
+
+  it 'populate the /etc/nginx/sites-available' do
+    expect(chef_run).to create_directory('/etc/nginx/sites-available')
+  end
+  it 'populate the /etc/nginx/sites-enabled' do
+    expect(chef_run).to create_directory('/etc/nginx/sites-enabled')
+  end
+  it 'populate the /etc/nginx/conf.d' do
+    expect(chef_run).to create_directory('/etc/nginx/conf.d')
+  end
+  it 'creates the template' do
+    expect(chef_run).to create_template('nginx.conf')
+  end
+  it 'creates the template' do
+    expect(chef_run).to create_template('/etc/nginx/sites-available/default')
+  end
+  it 'creates the template' do
+    expect(chef_run).to create_template('/usr/sbin/nxensite')
+  end
+  it 'creates the template' do
+    expect(chef_run).to create_template('/usr/sbin/nxdissite')
+  end
 end
