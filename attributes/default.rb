@@ -59,7 +59,7 @@ default['rackspace_nginx']['config']['gzip_comp_level']   = '2'
 default['rackspace_nginx']['config']['gzip_proxied']      = 'any'
 default['rackspace_nginx']['config']['gzip_vary']         = 'off'
 default['rackspace_nginx']['config']['gzip_buffers']      = nil
-default['rackspace_nginx']['config']['gzip_types']        = %w[
+default['rackspace_nginx']['config']['gzip_types']        = %w(
                                                     text/plain
                                                     text/css
                                                     application/x-javascript
@@ -71,7 +71,7 @@ default['rackspace_nginx']['config']['gzip_types']        = %w[
                                                     application/javascript
                                                     application/json
                                                     text/mathml
-                                                  ]
+                                                  )
 default['rackspace_nginx']['config']['gzip_min_length']   = 1_000
 default['rackspace_nginx']['config']['gzip_disable']      = 'MSIE [1-6]\.'
 
@@ -97,3 +97,8 @@ default['rackspace_nginx']['config']['types_hash_bucket_size'] = 64
 default['rackspace_nginx']['config']['proxy_read_timeout']      = nil
 default['rackspace_nginx']['config']['client_body_buffer_size'] = nil
 default['rackspace_nginx']['config']['client_max_body_size']    = nil
+
+default['rackspace_nginx']['templates']['nginx.conf'] = 'rackspace_nginx'
+default['rackspace_nginx']['templates']['fastcgi_params'] = 'rackspace_nginx'
+default['rackspace_nginx']['templates']['authorized_ip'] = 'rackspace_nginx'
+

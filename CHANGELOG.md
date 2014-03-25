@@ -2,6 +2,10 @@ nginx Cookbook CHANGELOG
 ========================
 This file is used to list changes made in each version of the nginx cookbook.
 
+v3.2.0
+------
+- Add template attributes to allow templates to dropped in from wrapper cookbooks
+
 v3.0.0
 ------
 - Rewrite for Rackspace specific environments

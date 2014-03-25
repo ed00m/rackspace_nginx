@@ -22,6 +22,7 @@
 #
 
 template 'nginx.conf' do
+  cookbook node['rackspace_nginx']['templates']['nginx.conf']
   path   "#{node['rackspace_nginx']['config']['dir']}/nginx.conf"
   source 'nginx.conf.erb'
   owner  'root'
@@ -43,6 +44,7 @@ nginx_site 'default' do
 end
 
 template "#{node['rackspace_nginx']['config']['dir']}/fastcgi_params" do
+  cookbook node['rackspace_nginx']['templates']['fastcgi_params']
   source 'fastcgi_params.erb'
   mode 0644
   owner 'root'
