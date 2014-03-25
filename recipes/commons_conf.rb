@@ -29,6 +29,9 @@ template 'nginx.conf' do
   group  'root'
   mode   '0644'
   notifies :reload, 'service[nginx]'
+  variables(
+    cookbook_name: cookbook_name
+  )
 end
 
 template "#{node['rackspace_nginx']['config']['dir']}/sites-available/default" do
@@ -50,5 +53,8 @@ template "#{node['rackspace_nginx']['config']['dir']}/fastcgi_params" do
   owner 'root'
   group 'root'
   notifies :reload, 'service[nginx]'
+  variables(
+    cookbook_name: cookbook_name
+  )
   only_if { node['rackspace_nginx']['fastcgi_params'] }
 end

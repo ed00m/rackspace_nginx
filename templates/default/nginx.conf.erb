@@ -1,3 +1,7 @@
+# CHEF MANAGED FILE: DO NOT EDIT
+# Controlling Cookbook: <%=  @cookbook_name %>
+#
+
 user <%= node['rackspace_nginx']['config']['user'] %><% if node['rackspace_nginx']['config']['user'] != node['rackspace_nginx']['config']['group'] %> <%= node['rackspace_nginx']['config']['group'] %><% end %>;
 worker_processes  <%= node['rackspace_nginx']['config']['worker_processes'] %>;
 <% if node['rackspace_nginx']['config']['daemon_disable'] -%>

@@ -32,4 +32,7 @@ template 'authorized_ip' do
   group  'root'
   mode   '0644'
   notifies :reload, 'service[nginx]'
+  variables(
+    cookbook_name: cookbook_name
+  )
 end
