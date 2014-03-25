@@ -42,7 +42,7 @@ directory File.dirname(node['rackspace_nginx']['config']['pid']) do
   recursive true
 end
 
-%w[sites-available sites-enabled conf.d].each do |leaf|
+%w( sites-available sites-enabled conf.d ).each do |leaf|
   directory File.join(node['rackspace_nginx']['config']['dir'], leaf) do
     owner 'root'
     group 'root'
