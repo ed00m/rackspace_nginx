@@ -40,4 +40,8 @@ describe 'rackspace_nginx::default' do
   it 'starts the service' do
     expect(chef_run).to start_service('nginx')
   end
+
+  it 'enables the default site' do
+    expect(chef_run).to enable_nginx_site('default')
+  end
 end

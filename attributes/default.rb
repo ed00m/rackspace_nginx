@@ -99,4 +99,4 @@ default['rackspace_nginx']['config']['client_max_body_size']    = nil
 
 default['rackspace_nginx']['templates']['nginx.conf'] = 'rackspace_nginx'
 default['rackspace_nginx']['templates']['fastcgi_params'] = 'rackspace_nginx'
-default['rackspace_nginx']['templates']['authorized_ip'] = 'rackspace_nginx'
+default['rackspace_nginx']['templates']['authorized_ips'] = 'rackspace_nginx'
