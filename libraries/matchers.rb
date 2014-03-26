@@ -1,5 +1,5 @@
 # Custom ChefSpec matchers
-#module ChefSpec::Matchers # rubocop: disable ClassAndModuleChildren
+# module ChefSpec::Matchers # rubocop: disable ClassAndModuleChildren
 #  RSpec::Matchers.define :enable_nginx_site do |site|
 #    match do |chef_run|
 #      chef_run.resources.any? do |resource|
@@ -15,7 +15,7 @@
 #      end
 #    end
 #  end
-#end
+# end
 
 if defined?(ChefSpec)
   def enable_nginx_site(site)
