@@ -22,12 +22,16 @@
 #
 
 template 'nginx.conf' do
+  cookbook node['rackspace_nginx']['templates']['nginx.conf']
   path   "#{node['rackspace_nginx']['config']['dir']}/nginx.conf"
   source 'nginx.conf.erb'
   owner  'root'
   group  'root'
   mode   '0644'
   notifies :reload, 'service[nginx]'
+  variables(
+    cookbook_name: cookbook_name
+  )
 end
 
 template "#{node['rackspace_nginx']['config']['dir']}/sites-available/default" do
@@ -43,10 +47,14 @@ nginx_site 'default' do
 end
 
 template "#{node['rackspace_nginx']['config']['dir']}/fastcgi_params" do
+  cookbook node['rackspace_nginx']['templates']['fastcgi_params']
   source 'fastcgi_params.erb'
   mode 0644
   owner 'root'
   group 'root'
   notifies :reload, 'service[nginx]'
+  variables(
+    cookbook_name: cookbook_name
+  )
   only_if { node['rackspace_nginx']['fastcgi_params'] }
 end

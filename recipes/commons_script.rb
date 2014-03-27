@@ -21,7 +21,7 @@
 # limitations under the License.
 #
 
-%w[nxensite nxdissite].each do |nxscript|
+%w( nxensite nxdissite ).each do |nxscript|
   template "#{node['rackspace_nginx']['config']['script_dir']}/#{nxscript}" do
     source "#{nxscript}.erb"
     mode   '0755'

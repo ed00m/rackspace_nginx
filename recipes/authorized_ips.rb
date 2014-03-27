@@ -25,10 +25,14 @@ node.default['rackspace_nginx']['remote_ip_var']  = 'remote_addr'
 node.default['rackspace_nginx']['authorized_ips'] = ['127.0.0.1/32']
 
 template 'authorized_ip' do
+  cookbook node['rackspace_nginx']['templates']['authorized_ips']
   path   "#{node['rackspace_nginx']['config']['dir']}/authorized_ip"
   source 'modules/authorized_ip.erb'
   owner  'root'
   group  'root'
   mode   '0644'
   notifies :reload, 'service[nginx]'
+  variables(
+    cookbook_name: cookbook_name
+  )
 end

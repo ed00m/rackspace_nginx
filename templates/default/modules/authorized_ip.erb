@@ -1,3 +1,7 @@
+# CHEF MANAGED FILE: DO NOT EDIT
+# Controlling Cookbook: <%=  @cookbook_name %>
+#
+
 geo $<%= node['rackspace_nginx']['remote_ip_var'] %> $authorized_ip {
   default no;
   <% node['rackspace_nginx']['authorized_ips'].each do |ip| %>

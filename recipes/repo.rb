@@ -41,7 +41,7 @@ when 'debian'
   rackspace_apt_repository 'nginx' do
     uri          node['rackspace_nginx']['upstream_repository']
     distribution node['lsb']['codename']
-    components   %w[nginx]
+    components   %w( nginx )
     deb_src      true
     key          'http://nginx.org/keys/nginx_signing.key'
     # this apt-get update resource is from rackspace_apt::default
