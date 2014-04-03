@@ -35,11 +35,15 @@ template 'nginx.conf' do
 end
 
 template "#{node['rackspace_nginx']['config']['dir']}/sites-available/default" do
+  cookbook node['rackspace_nginx']['templates']['default_site']
   source 'default-site.erb'
   owner  'root'
   group  'root'
   mode   '0644'
   notifies :reload, 'service[nginx]'
+  variables(
+    cookbook_name: cookbook_name
+  )
 end
 
 nginx_site 'default' do
